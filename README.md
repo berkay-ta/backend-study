@@ -4,6 +4,8 @@ A Go REST backend that simulates a football league: double round-robin
 fixtures, Premier-League scoring, live standings, result editing, and
 championship predictions.
 
+**Deployed at:** https://football.ibc.lol
+
 ## Features
 
 - **Season simulation:** play the next week, play all remaining weeks at once, or reset a league back to an unplayed schedule.
