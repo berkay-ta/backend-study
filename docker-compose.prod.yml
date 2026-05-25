@@ -1,0 +1,31 @@
+# Prod (VPS). Run explicitly so the local override is skipped:
+#   docker compose -f docker-compose.yml -f docker-compose.prod.yml --profile app up -d --build
+# Secrets from host .env; `:?` aborts the boot if missing. No DB port published.
+# API binds loopback only — front it with a TLS reverse proxy, open 22/80/443.
+services:
+  mysql:
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:?set a strong password in .env}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:?set the app-user password in .env}
+    restart: always
+    mem_limit: 512m
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  api:
+    environment:
+      APP_ENV: production
+      API_KEY: ${API_KEY:?set an API key in .env}
+    restart: always
+    mem_limit: 512m
+    cpus: 1.5
+    ports:
+      - "127.0.0.1:8080:8080"
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"

@@ -1,0 +1,628 @@
+openapi: 3.1.0
+info:
+  title: League API
+  version: 1.0.0
+paths:
+  /healthz:
+    get:
+      summary: Liveness probe
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status: { type: string, example: ok }
+
+  /api/v1/leagues:
+    get:
+      summary: List leagues
+      responses:
+        "200":
+          $ref: "#/components/responses/LeagueListEnvelope"
+    post:
+      summary: Create league
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateLeagueRequest"
+      responses:
+        "201":
+          $ref: "#/components/responses/CreateLeagueEnvelope"
+        "400":
+          $ref: "#/components/responses/ErrorEnvelope"
+        "401":
+          $ref: "#/components/responses/ErrorEnvelope"
+
+  /api/v1/leagues/{leagueID}:
+    parameters:
+      - $ref: "#/components/parameters/LeagueID"
+    get:
+      summary: Get league
+      responses:
+        "200":
+          $ref: "#/components/responses/LeagueEnvelope"
+        "404":
+          $ref: "#/components/responses/ErrorEnvelope"
+    delete:
+      summary: Delete league
+      security:
+        - ApiKeyAuth: []
+      responses:
+        "204":
+          description: Deleted
+        "401":
+          $ref: "#/components/responses/ErrorEnvelope"
+        "404":
+          $ref: "#/components/responses/ErrorEnvelope"
+
+  /api/v1/leagues/{leagueID}/reset:
+    parameters:
+      - $ref: "#/components/parameters/LeagueID"
+    post:
+      summary: Reset league (clears all results, preserves teams + fixtures)
+      security:
+        - ApiKeyAuth: []
+      responses:
+        "200":
+          $ref: "#/components/responses/LeagueEnvelope"
+        "401":
+          $ref: "#/components/responses/ErrorEnvelope"
+
+  /api/v1/leagues/{leagueID}/teams:
+    parameters:
+      - $ref: "#/components/parameters/LeagueID"
+    get:
+      summary: List teams
+      responses:
+        "200":
+          $ref: "#/components/responses/TeamListEnvelope"
+
+  /api/v1/leagues/{leagueID}/fixtures:
+    parameters:
+      - $ref: "#/components/parameters/LeagueID"
+    get:
+      summary: Fixtures grouped by week
+      responses:
+        "200":
+          $ref: "#/components/responses/FixturesEnvelope"
+
+  /api/v1/leagues/{leagueID}/standings:
+    parameters:
+      - $ref: "#/components/parameters/LeagueID"
+    get:
+      summary: Live league table (always computed from matches)
+      responses:
+        "200":
+          $ref: "#/components/responses/StandingsEnvelope"
+
+  /api/v1/leagues/{leagueID}/matches:
+    parameters:
+      - $ref: "#/components/parameters/LeagueID"
+      - name: week
+        in: query
+        required: false
+        schema: { type: integer, minimum: 1, maximum: 6 }
+    get:
+      summary: List matches, optionally filtered by week
+      responses:
+        "200":
+          $ref: "#/components/responses/MatchListEnvelope"
+
+  /api/v1/leagues/{leagueID}/matches/{matchID}:
+    parameters:
+      - $ref: "#/components/parameters/LeagueID"
+      - $ref: "#/components/parameters/MatchID"
+    get:
+      summary: Get match
+      responses:
+        "200":
+          $ref: "#/components/responses/MatchEnvelope"
+        "404":
+          $ref: "#/components/responses/ErrorEnvelope"
+    patch:
+      summary: Edit a played match's score
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EditMatchRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/EditMatchEnvelope"
+        "401":
+          $ref: "#/components/responses/ErrorEnvelope"
+        "409":
+          $ref: "#/components/responses/ErrorEnvelope"
+
+  /api/v1/leagues/{leagueID}/weeks/next:
+    parameters:
+      - $ref: "#/components/parameters/LeagueID"
+      - $ref: "#/components/parameters/IdempotencyKey"
+    post:
+      summary: Play the next week
+      security:
+        - ApiKeyAuth: []
+      responses:
+        "200":
+          $ref: "#/components/responses/PlayWeekEnvelope"
+        "400":
+          $ref: "#/components/responses/ErrorEnvelope"
+        "401":
+          $ref: "#/components/responses/ErrorEnvelope"
+        "409":
+          $ref: "#/components/responses/ErrorEnvelope"
+
+  /api/v1/leagues/{leagueID}/play-all:
+    parameters:
+      - $ref: "#/components/parameters/LeagueID"
+      - $ref: "#/components/parameters/IdempotencyKey"
+    post:
+      summary: Play all remaining weeks
+      security:
+        - ApiKeyAuth: []
+      responses:
+        "200":
+          $ref: "#/components/responses/PlayAllEnvelope"
+        "400":
+          $ref: "#/components/responses/ErrorEnvelope"
+        "401":
+          $ref: "#/components/responses/ErrorEnvelope"
+        "409":
+          $ref: "#/components/responses/ErrorEnvelope"
+
+  /api/v1/leagues/{leagueID}/predictions:
+    parameters:
+      - $ref: "#/components/parameters/LeagueID"
+    get:
+      summary: List prediction history (newest first)
+      responses:
+        "200":
+          $ref: "#/components/responses/PredictionListEnvelope"
+    post:
+      summary: Run a prediction with the chosen strategy
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: strategy
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [monte_carlo, ai_analyst]
+            default: monte_carlo
+      responses:
+        "201":
+          $ref: "#/components/responses/PredictionEnvelope"
+        "401":
+          $ref: "#/components/responses/ErrorEnvelope"
+        "409":
+          description: Prediction not available until 4 weeks have been played or after the season is complete
+        "503":
+          description: AI strategy disabled (no API key)
+
+  /api/v1/leagues/{leagueID}/predictions/{runID}:
+    parameters:
+      - $ref: "#/components/parameters/LeagueID"
+      - name: runID
+        in: path
+        required: true
+        schema: { type: integer, format: int64 }
+    get:
+      summary: Get one prediction run
+      responses:
+        "200":
+          $ref: "#/components/responses/PredictionEnvelope"
+
+  /api/v1/leagues/{leagueID}/what-if:
+    parameters:
+      - $ref: "#/components/parameters/LeagueID"
+    post:
+      summary: Hypothetical standings (+ optional prediction) from match overrides
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WhatIfRequest"
+      responses:
+        "200":
+          $ref: "#/components/responses/WhatIfEnvelope"
+        "401":
+          $ref: "#/components/responses/ErrorEnvelope"
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: |
+        Write operations (POST/PATCH/DELETE) require this header **only when the
+        server is started with API_KEY set**. If API_KEY is empty (the default),
+        the guard is disabled and the header is ignored. GET requests are never
+        guarded. A missing or wrong key on a guarded write returns 401.
+  parameters:
+    LeagueID:
+      name: leagueID
+      in: path
+      required: true
+      schema: { type: integer, format: int64 }
+    MatchID:
+      name: matchID
+      in: path
+      required: true
+      schema: { type: integer, format: int64 }
+    IdempotencyKey:
+      name: Idempotency-Key
+      in: header
+      required: true
+      description: Required for week-advancing writes. Reuse the same key to replay the same request safely.
+      schema: { type: string, maxLength: 120 }
+
+  schemas:
+    Meta:
+      type: object
+      properties:
+        request_id: { type: string }
+        league_version: { type: integer, format: int64, nullable: true }
+    Error:
+      type: object
+      properties:
+        code: { type: string }
+        message: { type: string }
+        fields:
+          type: array
+          items:
+            type: object
+            properties:
+              field: { type: string }
+              message: { type: string }
+    League:
+      type: object
+      properties:
+        id: { type: integer, format: int64 }
+        name: { type: string }
+        current_week: { type: integer }
+        total_weeks: { type: integer }
+        version: { type: integer, format: int64 }
+        created_at: { type: string, format: date-time }
+        complete: { type: boolean }
+    Team:
+      type: object
+      properties:
+        id: { type: integer, format: int64 }
+        name: { type: string }
+        strength: { type: integer, minimum: 1, maximum: 100 }
+    Match:
+      type: object
+      properties:
+        id: { type: integer, format: int64 }
+        league_id: { type: integer, format: int64 }
+        week: { type: integer }
+        home_team_id: { type: integer, format: int64 }
+        away_team_id: { type: integer, format: int64 }
+        home_goals: { type: integer, nullable: true }
+        away_goals: { type: integer, nullable: true }
+        played_at: { type: string, format: date-time, nullable: true }
+        edited_at: { type: string, format: date-time, nullable: true }
+        played: { type: boolean }
+    StandingRow:
+      type: object
+      properties:
+        position: { type: integer }
+        team_id: { type: integer, format: int64 }
+        team_name: { type: string }
+        played: { type: integer }
+        won: { type: integer }
+        drawn: { type: integer }
+        lost: { type: integer }
+        goals_for: { type: integer }
+        goals_against: { type: integer }
+        goal_diff: { type: integer }
+        points: { type: integer }
+    PredictionEntry:
+      type: object
+      properties:
+        projected_position: { type: integer }
+        team_id: { type: integer, format: int64 }
+        team_name: { type: string }
+        championship_pct: { type: number, format: double }
+        average_position: { type: number, format: double }
+        played: { type: integer }
+        expected_won: { type: number, format: double }
+        expected_drawn: { type: number, format: double }
+        expected_lost: { type: number, format: double }
+        expected_goals_for: { type: number, format: double }
+        expected_goals_against: { type: number, format: double }
+        expected_goal_diff: { type: number, format: double }
+        expected_points: { type: number, format: double }
+    PredictionResult:
+      type: object
+      properties:
+        strategy: { type: string }
+        projected_table:
+          type: array
+          description: Estimated final league table ordered by projected_position
+          items: { $ref: "#/components/schemas/PredictionEntry" }
+        entries:
+          type: array
+          description: Backward-compatible alias of projected_table
+          items: { $ref: "#/components/schemas/PredictionEntry" }
+        notes: { type: string }
+    PredictionRun:
+      type: object
+      properties:
+        id: { type: integer, format: int64 }
+        league_id: { type: integer, format: int64 }
+        strategy: { type: string }
+        snapshot_id: { type: integer, format: int64 }
+        league_version: { type: integer, format: int64 }
+        created_at: { type: string, format: date-time }
+        stale: { type: boolean }
+        result: { $ref: "#/components/schemas/PredictionResult" }
+    CreateLeagueRequest:
+      type: object
+      required: [name, teams]
+      properties:
+        name: { type: string }
+        teams:
+          type: array
+          minItems: 4
+          maxItems: 4
+          items:
+            type: object
+            required: [name, strength]
+            properties:
+              name: { type: string }
+              strength: { type: integer, minimum: 1, maximum: 100 }
+    EditMatchRequest:
+      type: object
+      required: [home_goals, away_goals]
+      properties:
+        home_goals: { type: integer, minimum: 0 }
+        away_goals: { type: integer, minimum: 0 }
+    WhatIfRequest:
+      type: object
+      properties:
+        overrides:
+          type: array
+          items:
+            type: object
+            required: [match_id, home_goals, away_goals]
+            properties:
+              match_id: { type: integer, format: int64 }
+              home_goals: { type: integer, minimum: 0 }
+              away_goals: { type: integer, minimum: 0 }
+        strategy:
+          type: string
+          enum: ["", monte_carlo, ai_analyst]
+
+  responses:
+    ErrorEnvelope:
+      description: Error envelope
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data: { nullable: true }
+              meta: { $ref: "#/components/schemas/Meta" }
+              error: { $ref: "#/components/schemas/Error" }
+    LeagueEnvelope:
+      description: League envelope
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data: { $ref: "#/components/schemas/League" }
+              meta: { $ref: "#/components/schemas/Meta" }
+              error: { nullable: true }
+    LeagueListEnvelope:
+      description: Array of leagues
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items: { $ref: "#/components/schemas/League" }
+              meta: { $ref: "#/components/schemas/Meta" }
+              error: { nullable: true }
+    CreateLeagueEnvelope:
+      description: Created league with teams + fixtures
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  league: { $ref: "#/components/schemas/League" }
+                  teams:
+                    type: array
+                    items: { $ref: "#/components/schemas/Team" }
+                  fixtures:
+                    type: array
+                    items: { $ref: "#/components/schemas/Match" }
+              meta: { $ref: "#/components/schemas/Meta" }
+              error: { nullable: true }
+    TeamListEnvelope:
+      description: Array of teams
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items: { $ref: "#/components/schemas/Team" }
+              meta: { $ref: "#/components/schemas/Meta" }
+              error: { nullable: true }
+    FixturesEnvelope:
+      description: Fixtures grouped by week
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    week: { type: integer }
+                    matches:
+                      type: array
+                      items: { $ref: "#/components/schemas/Match" }
+              meta: { $ref: "#/components/schemas/Meta" }
+              error: { nullable: true }
+    StandingsEnvelope:
+      description: Live standings
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items: { $ref: "#/components/schemas/StandingRow" }
+              meta: { $ref: "#/components/schemas/Meta" }
+              error: { nullable: true }
+    MatchListEnvelope:
+      description: Matches
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items: { $ref: "#/components/schemas/Match" }
+              meta: { $ref: "#/components/schemas/Meta" }
+              error: { nullable: true }
+    MatchEnvelope:
+      description: Single match
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data: { $ref: "#/components/schemas/Match" }
+              meta: { $ref: "#/components/schemas/Meta" }
+              error: { nullable: true }
+    EditMatchEnvelope:
+      description: Match edit result
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  match: { $ref: "#/components/schemas/Match" }
+                  standings:
+                    type: array
+                    items: { $ref: "#/components/schemas/StandingRow" }
+              meta: { $ref: "#/components/schemas/Meta" }
+              error: { nullable: true }
+    PlayWeekEnvelope:
+      description: One-week play result
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  week: { type: integer }
+                  matches:
+                    type: array
+                    items: { $ref: "#/components/schemas/Match" }
+                  standings:
+                    type: array
+                    items: { $ref: "#/components/schemas/StandingRow" }
+                  league: { $ref: "#/components/schemas/League" }
+              meta: { $ref: "#/components/schemas/Meta" }
+              error: { nullable: true }
+    PlayAllEnvelope:
+      description: Multi-week play result
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  weeks:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        week: { type: integer }
+                        matches:
+                          type: array
+                          items: { $ref: "#/components/schemas/Match" }
+                  standings:
+                    type: array
+                    items: { $ref: "#/components/schemas/StandingRow" }
+                  league: { $ref: "#/components/schemas/League" }
+              meta: { $ref: "#/components/schemas/Meta" }
+              error: { nullable: true }
+    PredictionEnvelope:
+      description: Single prediction run
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data: { $ref: "#/components/schemas/PredictionRun" }
+              meta: { $ref: "#/components/schemas/Meta" }
+              error: { nullable: true }
+    PredictionListEnvelope:
+      description: Prediction history
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items: { $ref: "#/components/schemas/PredictionRun" }
+              meta: { $ref: "#/components/schemas/Meta" }
+              error: { nullable: true }
+    WhatIfEnvelope:
+      description: Hypothetical result
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: object
+                properties:
+                  standings:
+                    type: array
+                    items: { $ref: "#/components/schemas/StandingRow" }
+                  prediction:
+                    $ref: "#/components/schemas/PredictionResult"
+                    nullable: true
+              meta: { $ref: "#/components/schemas/Meta" }
+              error: { nullable: true }

@@ -1,0 +1,13 @@
+.git
+.gitignore
+.env
+.env.local
+*.test
+*.out
+coverage.*
+bin/
+dist/
+docs/
+api/postman/
+*.md
+**/*.pdf

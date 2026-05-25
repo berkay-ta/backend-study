@@ -1,0 +1,66 @@
+# Base stack. No host ports — local ports are in docker-compose.override.yml
+# (auto-loaded), prod hardening in docker-compose.prod.yml (used with -f).
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: case1back-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: league
+      # App user, auto-created on first boot with full rights on `league` only.
+      MYSQL_USER: ${MYSQL_USER:-league_api}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-league_api}
+      TZ: UTC
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-time-zone=+00:00
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      # No creds: ping exits 0 when the server responds, and skips the CLI warning.
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 20s
+
+  migrate:
+    image: migrate/migrate:v4.17.1
+    container_name: case1back-migrate
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./migrations/mysql:/migrations
+    entrypoint:
+      - migrate
+      - -path=/migrations
+      - -database=mysql://${MYSQL_USER:-league_api}:${MYSQL_PASSWORD:-league_api}@tcp(mysql:3306)/league?charset=utf8mb4
+    command: ["up"]
+    profiles: ["migrate"]
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: case1back-api
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      APP_PORT: "8080"
+      APP_ENV: docker
+      LOG_LEVEL: info
+      MYSQL_DSN: "${MYSQL_USER:-league_api}:${MYSQL_PASSWORD:-league_api}@tcp(mysql:3306)/league?parseTime=true&charset=utf8mb4&loc=UTC"
+      RATE_LIMIT_RPS: "20"
+      RATE_LIMIT_BURST: "40"
+      MONTECARLO_SIMULATIONS: "10000"
+      API_KEY: "${API_KEY:-}"
+      OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+      OPENAI_MODEL: "${OPENAI_MODEL:-gpt-4.1-mini}"
+    profiles: ["app"]
+
+volumes:
+  mysql_data:

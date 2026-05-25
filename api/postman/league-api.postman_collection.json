@@ -1,0 +1,3479 @@
+{
+  "item": [
+    {
+      "id": "9feb21dd-5503-436f-afb1-de0941a3f0ff",
+      "name": "0. Healthz",
+      "request": {
+        "name": "Liveness probe",
+        "description": {},
+        "url": {
+          "path": [
+            "healthz"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "65333006-805b-4f7d-8e53-0440917fb200",
+          "name": "OK",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "healthz"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"status\": \"<string>\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('healthy (200)', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "594e3de0-ea3b-4e17-ae33-11647e2a318f",
+      "name": "1. Create league",
+      "request": {
+        "name": "Create league",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Premier Mini\",\n  \"teams\": [\n    { \"name\": \"Alpha\",   \"strength\": 90 },\n    { \"name\": \"Bravo\",   \"strength\": 70 },\n    { \"name\": \"Charlie\", \"strength\": 60 },\n    { \"name\": \"Delta\",   \"strength\": 50 }\n  ]\n}",
+          "options": {
+            "raw": {
+              "headerFamily": "json",
+              "language": "json"
+            }
+          }
+        },
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "eaa3c9cc-8ee7-45c6-8378-0399ca113c0a",
+          "name": "Created league with teams + fixtures",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"teams\": [\n    {\n      \"name\": \"<string>\",\n      \"strength\": \"<integer>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"strength\": \"<integer>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"strength\": \"<integer>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"strength\": \"<integer>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"league\": {\n      \"id\": \"<long>\",\n      \"name\": \"<string>\",\n      \"current_week\": \"<integer>\",\n      \"total_weeks\": \"<integer>\",\n      \"version\": \"<long>\",\n      \"created_at\": \"<dateTime>\",\n      \"complete\": \"<boolean>\"\n    },\n    \"teams\": [\n      {\n        \"id\": \"<long>\",\n        \"name\": \"<string>\",\n        \"strength\": \"<integer>\"\n      },\n      {\n        \"id\": \"<long>\",\n        \"name\": \"<string>\",\n        \"strength\": \"<integer>\"\n      }\n    ],\n    \"fixtures\": [\n      {\n        \"id\": \"<long>\",\n        \"league_id\": \"<long>\",\n        \"week\": \"<integer>\",\n        \"home_team_id\": \"<long>\",\n        \"away_team_id\": \"<long>\",\n        \"home_goals\": \"<integer>\",\n        \"away_goals\": \"<integer>\",\n        \"played_at\": \"<dateTime>\",\n        \"edited_at\": \"<dateTime>\",\n        \"played\": \"<boolean>\"\n      },\n      {\n        \"id\": \"<long>\",\n        \"league_id\": \"<long>\",\n        \"week\": \"<integer>\",\n        \"home_team_id\": \"<long>\",\n        \"away_team_id\": \"<long>\",\n        \"home_goals\": \"<integer>\",\n        \"away_goals\": \"<integer>\",\n        \"played_at\": \"<dateTime>\",\n        \"edited_at\": \"<dateTime>\",\n        \"played\": \"<boolean>\"\n      }\n    ]\n  },\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "b4e37b07-2761-48b5-b832-ff711273cd0e",
+          "name": "Error envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"teams\": [\n    {\n      \"name\": \"<string>\",\n      \"strength\": \"<integer>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"strength\": \"<integer>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"strength\": \"<integer>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"strength\": \"<integer>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": \"\",\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"fields\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      }\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "const resp = pm.response.json().data;",
+              "pm.collectionVariables.set('leagueID', resp.league.id);",
+              "pm.collectionVariables.set('matchID', resp.fixtures[0].id);",
+              "pm.test('201 created', () => pm.response.to.have.status(201));",
+              "pm.test('fixtures generated', () => pm.expect(resp.fixtures.length).to.be.above(0));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "4d6bb0b1-6615-4e61-ae40-74a403f74553",
+      "name": "2. Get fixtures",
+      "request": {
+        "name": "Fixtures grouped by week",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "fixtures"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "2f648ee7-e497-4535-969a-ac957eafabfe",
+          "name": "Fixtures grouped by week",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "fixtures"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"week\": \"<integer>\",\n      \"matches\": [\n        {\n          \"id\": \"<long>\",\n          \"league_id\": \"<long>\",\n          \"week\": \"<integer>\",\n          \"home_team_id\": \"<long>\",\n          \"away_team_id\": \"<long>\",\n          \"home_goals\": \"<integer>\",\n          \"away_goals\": \"<integer>\",\n          \"played_at\": \"<dateTime>\",\n          \"edited_at\": \"<dateTime>\",\n          \"played\": \"<boolean>\"\n        },\n        {\n          \"id\": \"<long>\",\n          \"league_id\": \"<long>\",\n          \"week\": \"<integer>\",\n          \"home_team_id\": \"<long>\",\n          \"away_team_id\": \"<long>\",\n          \"home_goals\": \"<integer>\",\n          \"away_goals\": \"<integer>\",\n          \"played_at\": \"<dateTime>\",\n          \"edited_at\": \"<dateTime>\",\n          \"played\": \"<boolean>\"\n        }\n      ]\n    },\n    {\n      \"week\": \"<integer>\",\n      \"matches\": [\n        {\n          \"id\": \"<long>\",\n          \"league_id\": \"<long>\",\n          \"week\": \"<integer>\",\n          \"home_team_id\": \"<long>\",\n          \"away_team_id\": \"<long>\",\n          \"home_goals\": \"<integer>\",\n          \"away_goals\": \"<integer>\",\n          \"played_at\": \"<dateTime>\",\n          \"edited_at\": \"<dateTime>\",\n          \"played\": \"<boolean>\"\n        },\n        {\n          \"id\": \"<long>\",\n          \"league_id\": \"<long>\",\n          \"week\": \"<integer>\",\n          \"home_team_id\": \"<long>\",\n          \"away_team_id\": \"<long>\",\n          \"home_goals\": \"<integer>\",\n          \"away_goals\": \"<integer>\",\n          \"played_at\": \"<dateTime>\",\n          \"edited_at\": \"<dateTime>\",\n          \"played\": \"<boolean>\"\n        }\n      ]\n    }\n  ],\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "31e29acd-13b6-4ed1-8b14-434f4018b10f",
+      "name": "3. Play week 1",
+      "request": {
+        "name": "Play the next week",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "weeks",
+            "next"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": {
+              "content": "(Required) Unique key per logical operation. A fresh GUID is generated each run; reuse a key to safely replay the same request.",
+              "type": "text/plain"
+            },
+            "key": "Idempotency-Key",
+            "value": "{{$guid}}"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "78b46105-d135-4797-b98c-04982b9357ee",
+          "name": "One-week play result",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "weeks",
+                "next"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) Required for week-advancing writes. Reuse the same key to replay the same request safely.",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"week\": \"<integer>\",\n    \"matches\": [\n      {\n        \"id\": \"<long>\",\n        \"league_id\": \"<long>\",\n        \"week\": \"<integer>\",\n        \"home_team_id\": \"<long>\",\n        \"away_team_id\": \"<long>\",\n        \"home_goals\": \"<integer>\",\n        \"away_goals\": \"<integer>\",\n        \"played_at\": \"<dateTime>\",\n        \"edited_at\": \"<dateTime>\",\n        \"played\": \"<boolean>\"\n      },\n      {\n        \"id\": \"<long>\",\n        \"league_id\": \"<long>\",\n        \"week\": \"<integer>\",\n        \"home_team_id\": \"<long>\",\n        \"away_team_id\": \"<long>\",\n        \"home_goals\": \"<integer>\",\n        \"away_goals\": \"<integer>\",\n        \"played_at\": \"<dateTime>\",\n        \"edited_at\": \"<dateTime>\",\n        \"played\": \"<boolean>\"\n      }\n    ],\n    \"standings\": [\n      {\n        \"position\": \"<integer>\",\n        \"team_id\": \"<long>\",\n        \"team_name\": \"<string>\",\n        \"played\": \"<integer>\",\n        \"won\": \"<integer>\",\n        \"drawn\": \"<integer>\",\n        \"lost\": \"<integer>\",\n        \"goals_for\": \"<integer>\",\n        \"goals_against\": \"<integer>\",\n        \"goal_diff\": \"<integer>\",\n        \"points\": \"<integer>\"\n      },\n      {\n        \"position\": \"<integer>\",\n        \"team_id\": \"<long>\",\n        \"team_name\": \"<string>\",\n        \"played\": \"<integer>\",\n        \"won\": \"<integer>\",\n        \"drawn\": \"<integer>\",\n        \"lost\": \"<integer>\",\n        \"goals_for\": \"<integer>\",\n        \"goals_against\": \"<integer>\",\n        \"goal_diff\": \"<integer>\",\n        \"points\": \"<integer>\"\n      }\n    ],\n    \"league\": {\n      \"id\": \"<long>\",\n      \"name\": \"<string>\",\n      \"current_week\": \"<integer>\",\n      \"total_weeks\": \"<integer>\",\n      \"version\": \"<long>\",\n      \"created_at\": \"<dateTime>\",\n      \"complete\": \"<boolean>\"\n    }\n  },\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "5a0a7ae1-df88-4051-b656-01c369c3a734",
+          "name": "Error envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "weeks",
+                "next"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) Required for week-advancing writes. Reuse the same key to replay the same request safely.",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": \"\",\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"fields\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      }\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "b1eea6b8-32d4-4c4c-a2f2-9c8d9db6be6d",
+          "name": "Error envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "weeks",
+                "next"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) Required for week-advancing writes. Reuse the same key to replay the same request safely.",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": \"\",\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"fields\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      }\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('week played (200)', () => pm.response.to.have.status(200));",
+              "const d = pm.response.json().data;",
+              "pm.test('advanced to week 2', () => pm.expect(d.league.current_week).to.eql(2));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "6a11ac58-23ac-4d67-8162-96cecca8a187",
+      "name": "4. Play week 2",
+      "request": {
+        "name": "Play the next week",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "weeks",
+            "next"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": {
+              "content": "(Required) Unique key per logical operation. A fresh GUID is generated each run; reuse a key to safely replay the same request.",
+              "type": "text/plain"
+            },
+            "key": "Idempotency-Key",
+            "value": "{{$guid}}"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "78b46105-d135-4797-b98c-04982b9357ee",
+          "name": "One-week play result",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "weeks",
+                "next"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) Required for week-advancing writes. Reuse the same key to replay the same request safely.",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"week\": \"<integer>\",\n    \"matches\": [\n      {\n        \"id\": \"<long>\",\n        \"league_id\": \"<long>\",\n        \"week\": \"<integer>\",\n        \"home_team_id\": \"<long>\",\n        \"away_team_id\": \"<long>\",\n        \"home_goals\": \"<integer>\",\n        \"away_goals\": \"<integer>\",\n        \"played_at\": \"<dateTime>\",\n        \"edited_at\": \"<dateTime>\",\n        \"played\": \"<boolean>\"\n      },\n      {\n        \"id\": \"<long>\",\n        \"league_id\": \"<long>\",\n        \"week\": \"<integer>\",\n        \"home_team_id\": \"<long>\",\n        \"away_team_id\": \"<long>\",\n        \"home_goals\": \"<integer>\",\n        \"away_goals\": \"<integer>\",\n        \"played_at\": \"<dateTime>\",\n        \"edited_at\": \"<dateTime>\",\n        \"played\": \"<boolean>\"\n      }\n    ],\n    \"standings\": [\n      {\n        \"position\": \"<integer>\",\n        \"team_id\": \"<long>\",\n        \"team_name\": \"<string>\",\n        \"played\": \"<integer>\",\n        \"won\": \"<integer>\",\n        \"drawn\": \"<integer>\",\n        \"lost\": \"<integer>\",\n        \"goals_for\": \"<integer>\",\n        \"goals_against\": \"<integer>\",\n        \"goal_diff\": \"<integer>\",\n        \"points\": \"<integer>\"\n      },\n      {\n        \"position\": \"<integer>\",\n        \"team_id\": \"<long>\",\n        \"team_name\": \"<string>\",\n        \"played\": \"<integer>\",\n        \"won\": \"<integer>\",\n        \"drawn\": \"<integer>\",\n        \"lost\": \"<integer>\",\n        \"goals_for\": \"<integer>\",\n        \"goals_against\": \"<integer>\",\n        \"goal_diff\": \"<integer>\",\n        \"points\": \"<integer>\"\n      }\n    ],\n    \"league\": {\n      \"id\": \"<long>\",\n      \"name\": \"<string>\",\n      \"current_week\": \"<integer>\",\n      \"total_weeks\": \"<integer>\",\n      \"version\": \"<long>\",\n      \"created_at\": \"<dateTime>\",\n      \"complete\": \"<boolean>\"\n    }\n  },\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "5a0a7ae1-df88-4051-b656-01c369c3a734",
+          "name": "Error envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "weeks",
+                "next"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) Required for week-advancing writes. Reuse the same key to replay the same request safely.",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": \"\",\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"fields\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      }\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "b1eea6b8-32d4-4c4c-a2f2-9c8d9db6be6d",
+          "name": "Error envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "weeks",
+                "next"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) Required for week-advancing writes. Reuse the same key to replay the same request safely.",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": \"\",\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"fields\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      }\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('week played (200)', () => pm.response.to.have.status(200));",
+              "const d = pm.response.json().data;",
+              "pm.test('advanced to week 3', () => pm.expect(d.league.current_week).to.eql(3));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "9da1c106-63b4-48a1-85cd-3ee68d8cad30",
+      "name": "5. Play week 3",
+      "request": {
+        "name": "Play the next week",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "weeks",
+            "next"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": {
+              "content": "(Required) Unique key per logical operation. A fresh GUID is generated each run; reuse a key to safely replay the same request.",
+              "type": "text/plain"
+            },
+            "key": "Idempotency-Key",
+            "value": "{{$guid}}"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "78b46105-d135-4797-b98c-04982b9357ee",
+          "name": "One-week play result",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "weeks",
+                "next"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) Required for week-advancing writes. Reuse the same key to replay the same request safely.",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"week\": \"<integer>\",\n    \"matches\": [\n      {\n        \"id\": \"<long>\",\n        \"league_id\": \"<long>\",\n        \"week\": \"<integer>\",\n        \"home_team_id\": \"<long>\",\n        \"away_team_id\": \"<long>\",\n        \"home_goals\": \"<integer>\",\n        \"away_goals\": \"<integer>\",\n        \"played_at\": \"<dateTime>\",\n        \"edited_at\": \"<dateTime>\",\n        \"played\": \"<boolean>\"\n      },\n      {\n        \"id\": \"<long>\",\n        \"league_id\": \"<long>\",\n        \"week\": \"<integer>\",\n        \"home_team_id\": \"<long>\",\n        \"away_team_id\": \"<long>\",\n        \"home_goals\": \"<integer>\",\n        \"away_goals\": \"<integer>\",\n        \"played_at\": \"<dateTime>\",\n        \"edited_at\": \"<dateTime>\",\n        \"played\": \"<boolean>\"\n      }\n    ],\n    \"standings\": [\n      {\n        \"position\": \"<integer>\",\n        \"team_id\": \"<long>\",\n        \"team_name\": \"<string>\",\n        \"played\": \"<integer>\",\n        \"won\": \"<integer>\",\n        \"drawn\": \"<integer>\",\n        \"lost\": \"<integer>\",\n        \"goals_for\": \"<integer>\",\n        \"goals_against\": \"<integer>\",\n        \"goal_diff\": \"<integer>\",\n        \"points\": \"<integer>\"\n      },\n      {\n        \"position\": \"<integer>\",\n        \"team_id\": \"<long>\",\n        \"team_name\": \"<string>\",\n        \"played\": \"<integer>\",\n        \"won\": \"<integer>\",\n        \"drawn\": \"<integer>\",\n        \"lost\": \"<integer>\",\n        \"goals_for\": \"<integer>\",\n        \"goals_against\": \"<integer>\",\n        \"goal_diff\": \"<integer>\",\n        \"points\": \"<integer>\"\n      }\n    ],\n    \"league\": {\n      \"id\": \"<long>\",\n      \"name\": \"<string>\",\n      \"current_week\": \"<integer>\",\n      \"total_weeks\": \"<integer>\",\n      \"version\": \"<long>\",\n      \"created_at\": \"<dateTime>\",\n      \"complete\": \"<boolean>\"\n    }\n  },\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "5a0a7ae1-df88-4051-b656-01c369c3a734",
+          "name": "Error envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "weeks",
+                "next"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) Required for week-advancing writes. Reuse the same key to replay the same request safely.",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": \"\",\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"fields\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      }\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "b1eea6b8-32d4-4c4c-a2f2-9c8d9db6be6d",
+          "name": "Error envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "weeks",
+                "next"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) Required for week-advancing writes. Reuse the same key to replay the same request safely.",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": \"\",\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"fields\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      }\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('week played (200)', () => pm.response.to.have.status(200));",
+              "const d = pm.response.json().data;",
+              "pm.test('advanced to week 4', () => pm.expect(d.league.current_week).to.eql(4));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "c6737e16-5c43-47dd-b697-6f32a8eea0ad",
+      "name": "6. Play week 4",
+      "request": {
+        "name": "Play the next week",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "weeks",
+            "next"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": {
+              "content": "(Required) Unique key per logical operation. A fresh GUID is generated each run; reuse a key to safely replay the same request.",
+              "type": "text/plain"
+            },
+            "key": "Idempotency-Key",
+            "value": "{{$guid}}"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "78b46105-d135-4797-b98c-04982b9357ee",
+          "name": "One-week play result",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "weeks",
+                "next"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) Required for week-advancing writes. Reuse the same key to replay the same request safely.",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"week\": \"<integer>\",\n    \"matches\": [\n      {\n        \"id\": \"<long>\",\n        \"league_id\": \"<long>\",\n        \"week\": \"<integer>\",\n        \"home_team_id\": \"<long>\",\n        \"away_team_id\": \"<long>\",\n        \"home_goals\": \"<integer>\",\n        \"away_goals\": \"<integer>\",\n        \"played_at\": \"<dateTime>\",\n        \"edited_at\": \"<dateTime>\",\n        \"played\": \"<boolean>\"\n      },\n      {\n        \"id\": \"<long>\",\n        \"league_id\": \"<long>\",\n        \"week\": \"<integer>\",\n        \"home_team_id\": \"<long>\",\n        \"away_team_id\": \"<long>\",\n        \"home_goals\": \"<integer>\",\n        \"away_goals\": \"<integer>\",\n        \"played_at\": \"<dateTime>\",\n        \"edited_at\": \"<dateTime>\",\n        \"played\": \"<boolean>\"\n      }\n    ],\n    \"standings\": [\n      {\n        \"position\": \"<integer>\",\n        \"team_id\": \"<long>\",\n        \"team_name\": \"<string>\",\n        \"played\": \"<integer>\",\n        \"won\": \"<integer>\",\n        \"drawn\": \"<integer>\",\n        \"lost\": \"<integer>\",\n        \"goals_for\": \"<integer>\",\n        \"goals_against\": \"<integer>\",\n        \"goal_diff\": \"<integer>\",\n        \"points\": \"<integer>\"\n      },\n      {\n        \"position\": \"<integer>\",\n        \"team_id\": \"<long>\",\n        \"team_name\": \"<string>\",\n        \"played\": \"<integer>\",\n        \"won\": \"<integer>\",\n        \"drawn\": \"<integer>\",\n        \"lost\": \"<integer>\",\n        \"goals_for\": \"<integer>\",\n        \"goals_against\": \"<integer>\",\n        \"goal_diff\": \"<integer>\",\n        \"points\": \"<integer>\"\n      }\n    ],\n    \"league\": {\n      \"id\": \"<long>\",\n      \"name\": \"<string>\",\n      \"current_week\": \"<integer>\",\n      \"total_weeks\": \"<integer>\",\n      \"version\": \"<long>\",\n      \"created_at\": \"<dateTime>\",\n      \"complete\": \"<boolean>\"\n    }\n  },\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "5a0a7ae1-df88-4051-b656-01c369c3a734",
+          "name": "Error envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "weeks",
+                "next"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) Required for week-advancing writes. Reuse the same key to replay the same request safely.",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": \"\",\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"fields\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      }\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "b1eea6b8-32d4-4c4c-a2f2-9c8d9db6be6d",
+          "name": "Error envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "weeks",
+                "next"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) Required for week-advancing writes. Reuse the same key to replay the same request safely.",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": \"\",\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"fields\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      }\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('week played (200)', () => pm.response.to.have.status(200));",
+              "const d = pm.response.json().data;",
+              "pm.test('advanced to week 5', () => pm.expect(d.league.current_week).to.eql(5));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "8ceae1a0-588a-46ee-b07c-39d8858bc49b",
+      "name": "7. View standings",
+      "request": {
+        "name": "Live league table (always computed from matches)",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "standings"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "3447c405-a573-4a87-8dc0-a476cf0e6b9a",
+          "name": "Live standings",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "standings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"position\": \"<integer>\",\n      \"team_id\": \"<long>\",\n      \"team_name\": \"<string>\",\n      \"played\": \"<integer>\",\n      \"won\": \"<integer>\",\n      \"drawn\": \"<integer>\",\n      \"lost\": \"<integer>\",\n      \"goals_for\": \"<integer>\",\n      \"goals_against\": \"<integer>\",\n      \"goal_diff\": \"<integer>\",\n      \"points\": \"<integer>\"\n    },\n    {\n      \"position\": \"<integer>\",\n      \"team_id\": \"<long>\",\n      \"team_name\": \"<string>\",\n      \"played\": \"<integer>\",\n      \"won\": \"<integer>\",\n      \"drawn\": \"<integer>\",\n      \"lost\": \"<integer>\",\n      \"goals_for\": \"<integer>\",\n      \"goals_against\": \"<integer>\",\n      \"goal_diff\": \"<integer>\",\n      \"points\": \"<integer>\"\n    }\n  ],\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "10a4c8b0-d821-4bc0-8984-5a60fd83199a",
+      "name": "8. Predict (Monte Carlo)",
+      "request": {
+        "name": "Run a prediction with the chosen strategy",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "predictions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [
+            {
+              "disabled": false,
+              "description": {
+                "content": " (This can only be one of monte_carlo,ai_analyst)",
+                "type": "text/plain"
+              },
+              "key": "strategy",
+              "value": "monte_carlo"
+            }
+          ],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "40e8adfc-4018-4b18-bc77-128c0719da5c",
+          "name": "Single prediction run",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "predictions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": " (This can only be one of monte_carlo,ai_analyst)",
+                    "type": "text/plain"
+                  },
+                  "key": "strategy",
+                  "value": "monte_carlo"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "Created",
+          "code": 201,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": \"<long>\",\n    \"league_id\": \"<long>\",\n    \"strategy\": \"<string>\",\n    \"snapshot_id\": \"<long>\",\n    \"league_version\": \"<long>\",\n    \"created_at\": \"<dateTime>\",\n    \"stale\": \"<boolean>\",\n    \"result\": {\n      \"strategy\": \"<string>\",\n      \"projected_table\": [\n        {\n          \"projected_position\": \"<integer>\",\n          \"team_id\": \"<long>\",\n          \"team_name\": \"<string>\",\n          \"championship_pct\": \"<double>\",\n          \"average_position\": \"<double>\",\n          \"played\": \"<integer>\",\n          \"expected_won\": \"<double>\",\n          \"expected_drawn\": \"<double>\",\n          \"expected_lost\": \"<double>\",\n          \"expected_goals_for\": \"<double>\",\n          \"expected_goals_against\": \"<double>\",\n          \"expected_goal_diff\": \"<double>\",\n          \"expected_points\": \"<double>\"\n        },\n        {\n          \"projected_position\": \"<integer>\",\n          \"team_id\": \"<long>\",\n          \"team_name\": \"<string>\",\n          \"championship_pct\": \"<double>\",\n          \"average_position\": \"<double>\",\n          \"played\": \"<integer>\",\n          \"expected_won\": \"<double>\",\n          \"expected_drawn\": \"<double>\",\n          \"expected_lost\": \"<double>\",\n          \"expected_goals_for\": \"<double>\",\n          \"expected_goals_against\": \"<double>\",\n          \"expected_goal_diff\": \"<double>\",\n          \"expected_points\": \"<double>\"\n        }\n      ],\n      \"entries\": [\n        {\n          \"projected_position\": \"<integer>\",\n          \"team_id\": \"<long>\",\n          \"team_name\": \"<string>\",\n          \"championship_pct\": \"<double>\",\n          \"average_position\": \"<double>\",\n          \"played\": \"<integer>\",\n          \"expected_won\": \"<double>\",\n          \"expected_drawn\": \"<double>\",\n          \"expected_lost\": \"<double>\",\n          \"expected_goals_for\": \"<double>\",\n          \"expected_goals_against\": \"<double>\",\n          \"expected_goal_diff\": \"<double>\",\n          \"expected_points\": \"<double>\"\n        },\n        {\n          \"projected_position\": \"<integer>\",\n          \"team_id\": \"<long>\",\n          \"team_name\": \"<string>\",\n          \"championship_pct\": \"<double>\",\n          \"average_position\": \"<double>\",\n          \"played\": \"<integer>\",\n          \"expected_won\": \"<double>\",\n          \"expected_drawn\": \"<double>\",\n          \"expected_lost\": \"<double>\",\n          \"expected_goals_for\": \"<double>\",\n          \"expected_goals_against\": \"<double>\",\n          \"expected_goal_diff\": \"<double>\",\n          \"expected_points\": \"<double>\"\n        }\n      ],\n      \"notes\": \"<string>\"\n    }\n  },\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "8fa6e306-3eba-429c-99fd-01fcd4016ac6",
+          "name": "Prediction not available before week 4 or after season completion",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "predictions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": " (This can only be one of monte_carlo,ai_analyst)",
+                    "type": "text/plain"
+                  },
+                  "key": "strategy",
+                  "value": "monte_carlo"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "method": "POST",
+            "body": {}
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [],
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "e11db579-432a-40bc-a629-f75884b2ad5f",
+          "name": "AI strategy disabled (no API key)",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "predictions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": " (This can only be one of monte_carlo,ai_analyst)",
+                    "type": "text/plain"
+                  },
+                  "key": "strategy",
+                  "value": "monte_carlo"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "method": "POST",
+            "body": {}
+          },
+          "status": "Service Unavailable",
+          "code": 503,
+          "header": [],
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('prediction created (201)', () => pm.response.to.have.status(201));",
+              "const resp = pm.response.json().data;",
+              "if (resp && resp.id) pm.collectionVariables.set('runID', resp.id);",
+              "pm.test('championship pct sums to ~100', () => {",
+              "  const total = resp.result.entries.reduce((s, e) => s + e.championship_pct, 0);",
+              "  pm.expect(total).to.be.closeTo(100, 0.6);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "4d609e21-de31-4773-9854-c167ac11cdb8",
+      "name": "9. What-if: override a played match 7-0",
+      "request": {
+        "name": "Hypothetical standings (+ optional prediction) from match overrides",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "what-if"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"overrides\": [\n    { \"match_id\": {{matchID}}, \"home_goals\": 7, \"away_goals\": 0 }\n  ],\n  \"strategy\": \"monte_carlo\"\n}",
+          "options": {
+            "raw": {
+              "headerFamily": "json",
+              "language": "json"
+            }
+          }
+        },
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "82065f92-deaa-46ec-a75c-6c46ed4333bf",
+          "name": "Hypothetical result",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "what-if"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"overrides\": [\n    {\n      \"match_id\": \"<long>\",\n      \"home_goals\": \"<integer>\",\n      \"away_goals\": \"<integer>\"\n    },\n    {\n      \"match_id\": \"<long>\",\n      \"home_goals\": \"<integer>\",\n      \"away_goals\": \"<integer>\"\n    }\n  ],\n  \"strategy\": \"\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"standings\": [\n      {\n        \"position\": \"<integer>\",\n        \"team_id\": \"<long>\",\n        \"team_name\": \"<string>\",\n        \"played\": \"<integer>\",\n        \"won\": \"<integer>\",\n        \"drawn\": \"<integer>\",\n        \"lost\": \"<integer>\",\n        \"goals_for\": \"<integer>\",\n        \"goals_against\": \"<integer>\",\n        \"goal_diff\": \"<integer>\",\n        \"points\": \"<integer>\"\n      },\n      {\n        \"position\": \"<integer>\",\n        \"team_id\": \"<long>\",\n        \"team_name\": \"<string>\",\n        \"played\": \"<integer>\",\n        \"won\": \"<integer>\",\n        \"drawn\": \"<integer>\",\n        \"lost\": \"<integer>\",\n        \"goals_for\": \"<integer>\",\n        \"goals_against\": \"<integer>\",\n        \"goal_diff\": \"<integer>\",\n        \"points\": \"<integer>\"\n      }\n    ],\n    \"prediction\": {\n      \"strategy\": \"<string>\",\n      \"projected_table\": [\n        {\n          \"projected_position\": \"<integer>\",\n          \"team_id\": \"<long>\",\n          \"team_name\": \"<string>\",\n          \"championship_pct\": \"<double>\",\n          \"average_position\": \"<double>\",\n          \"played\": \"<integer>\",\n          \"expected_won\": \"<double>\",\n          \"expected_drawn\": \"<double>\",\n          \"expected_lost\": \"<double>\",\n          \"expected_goals_for\": \"<double>\",\n          \"expected_goals_against\": \"<double>\",\n          \"expected_goal_diff\": \"<double>\",\n          \"expected_points\": \"<double>\"\n        },\n        {\n          \"projected_position\": \"<integer>\",\n          \"team_id\": \"<long>\",\n          \"team_name\": \"<string>\",\n          \"championship_pct\": \"<double>\",\n          \"average_position\": \"<double>\",\n          \"played\": \"<integer>\",\n          \"expected_won\": \"<double>\",\n          \"expected_drawn\": \"<double>\",\n          \"expected_lost\": \"<double>\",\n          \"expected_goals_for\": \"<double>\",\n          \"expected_goals_against\": \"<double>\",\n          \"expected_goal_diff\": \"<double>\",\n          \"expected_points\": \"<double>\"\n        }\n      ],\n      \"entries\": [\n        {\n          \"projected_position\": \"<integer>\",\n          \"team_id\": \"<long>\",\n          \"team_name\": \"<string>\",\n          \"championship_pct\": \"<double>\",\n          \"average_position\": \"<double>\",\n          \"played\": \"<integer>\",\n          \"expected_won\": \"<double>\",\n          \"expected_drawn\": \"<double>\",\n          \"expected_lost\": \"<double>\",\n          \"expected_goals_for\": \"<double>\",\n          \"expected_goals_against\": \"<double>\",\n          \"expected_goal_diff\": \"<double>\",\n          \"expected_points\": \"<double>\"\n        },\n        {\n          \"projected_position\": \"<integer>\",\n          \"team_id\": \"<long>\",\n          \"team_name\": \"<string>\",\n          \"championship_pct\": \"<double>\",\n          \"average_position\": \"<double>\",\n          \"played\": \"<integer>\",\n          \"expected_won\": \"<double>\",\n          \"expected_drawn\": \"<double>\",\n          \"expected_lost\": \"<double>\",\n          \"expected_goals_for\": \"<double>\",\n          \"expected_goals_against\": \"<double>\",\n          \"expected_goal_diff\": \"<double>\",\n          \"expected_points\": \"<double>\"\n        }\n      ],\n      \"notes\": \"<string>\"\n    }\n  },\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('what-if ok (200)', () => pm.response.to.have.status(200));",
+              "pm.test('returns hypothetical prediction', () => pm.expect(pm.response.json().data.prediction).to.not.be.null);"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "f07cacf5-e2ef-4917-9152-97e81c5d1e5f",
+      "name": "10. Edit a played match, standings recompute",
+      "request": {
+        "name": "Edit a played match's score",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "matches",
+            ":matchID"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            },
+            {
+              "type": "any",
+              "value": "{{matchID}}",
+              "key": "matchID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "PATCH",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"home_goals\": 5,\n  \"away_goals\": 5\n}",
+          "options": {
+            "raw": {
+              "headerFamily": "json",
+              "language": "json"
+            }
+          }
+        },
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "f1ff2048-a15d-4b43-a188-329398527981",
+          "name": "Match edit result",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "matches",
+                ":matchID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "matchID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"home_goals\": \"<integer>\",\n  \"away_goals\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"match\": {\n      \"id\": \"<long>\",\n      \"league_id\": \"<long>\",\n      \"week\": \"<integer>\",\n      \"home_team_id\": \"<long>\",\n      \"away_team_id\": \"<long>\",\n      \"home_goals\": \"<integer>\",\n      \"away_goals\": \"<integer>\",\n      \"played_at\": \"<dateTime>\",\n      \"edited_at\": \"<dateTime>\",\n      \"played\": \"<boolean>\"\n    },\n    \"standings\": [\n      {\n        \"position\": \"<integer>\",\n        \"team_id\": \"<long>\",\n        \"team_name\": \"<string>\",\n        \"played\": \"<integer>\",\n        \"won\": \"<integer>\",\n        \"drawn\": \"<integer>\",\n        \"lost\": \"<integer>\",\n        \"goals_for\": \"<integer>\",\n        \"goals_against\": \"<integer>\",\n        \"goal_diff\": \"<integer>\",\n        \"points\": \"<integer>\"\n      },\n      {\n        \"position\": \"<integer>\",\n        \"team_id\": \"<long>\",\n        \"team_name\": \"<string>\",\n        \"played\": \"<integer>\",\n        \"won\": \"<integer>\",\n        \"drawn\": \"<integer>\",\n        \"lost\": \"<integer>\",\n        \"goals_for\": \"<integer>\",\n        \"goals_against\": \"<integer>\",\n        \"goal_diff\": \"<integer>\",\n        \"points\": \"<integer>\"\n      }\n    ]\n  },\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "a89eb048-ec4b-4ec2-86d5-2604b6e20798",
+          "name": "Error envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "matches",
+                ":matchID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "matchID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"home_goals\": \"<integer>\",\n  \"away_goals\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": \"\",\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"fields\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      }\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('edit ok (200)', () => pm.response.to.have.status(200));",
+              "pm.test('standings returned', () => pm.expect(pm.response.json().data.standings.length).to.be.above(0));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "f1e18024-5bc4-41d8-b961-4f8bb5817f84",
+      "name": "11. List predictions (prior run now stale)",
+      "request": {
+        "name": "List prediction history (newest first)",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "predictions"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "78aaa9c8-9d9f-438b-a985-4ed741bdaa9f",
+          "name": "Prediction history",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "predictions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": \"<long>\",\n      \"league_id\": \"<long>\",\n      \"strategy\": \"<string>\",\n      \"snapshot_id\": \"<long>\",\n      \"league_version\": \"<long>\",\n      \"created_at\": \"<dateTime>\",\n      \"stale\": \"<boolean>\",\n      \"result\": {\n        \"strategy\": \"<string>\",\n        \"projected_table\": [\n          {\n            \"projected_position\": \"<integer>\",\n            \"team_id\": \"<long>\",\n            \"team_name\": \"<string>\",\n            \"championship_pct\": \"<double>\",\n            \"average_position\": \"<double>\",\n            \"played\": \"<integer>\",\n            \"expected_won\": \"<double>\",\n            \"expected_drawn\": \"<double>\",\n            \"expected_lost\": \"<double>\",\n            \"expected_goals_for\": \"<double>\",\n            \"expected_goals_against\": \"<double>\",\n            \"expected_goal_diff\": \"<double>\",\n            \"expected_points\": \"<double>\"\n          },\n          {\n            \"projected_position\": \"<integer>\",\n            \"team_id\": \"<long>\",\n            \"team_name\": \"<string>\",\n            \"championship_pct\": \"<double>\",\n            \"average_position\": \"<double>\",\n            \"played\": \"<integer>\",\n            \"expected_won\": \"<double>\",\n            \"expected_drawn\": \"<double>\",\n            \"expected_lost\": \"<double>\",\n            \"expected_goals_for\": \"<double>\",\n            \"expected_goals_against\": \"<double>\",\n            \"expected_goal_diff\": \"<double>\",\n            \"expected_points\": \"<double>\"\n          }\n        ],\n        \"entries\": [\n          {\n            \"projected_position\": \"<integer>\",\n            \"team_id\": \"<long>\",\n            \"team_name\": \"<string>\",\n            \"championship_pct\": \"<double>\",\n            \"average_position\": \"<double>\",\n            \"played\": \"<integer>\",\n            \"expected_won\": \"<double>\",\n            \"expected_drawn\": \"<double>\",\n            \"expected_lost\": \"<double>\",\n            \"expected_goals_for\": \"<double>\",\n            \"expected_goals_against\": \"<double>\",\n            \"expected_goal_diff\": \"<double>\",\n            \"expected_points\": \"<double>\"\n          },\n          {\n            \"projected_position\": \"<integer>\",\n            \"team_id\": \"<long>\",\n            \"team_name\": \"<string>\",\n            \"championship_pct\": \"<double>\",\n            \"average_position\": \"<double>\",\n            \"played\": \"<integer>\",\n            \"expected_won\": \"<double>\",\n            \"expected_drawn\": \"<double>\",\n            \"expected_lost\": \"<double>\",\n            \"expected_goals_for\": \"<double>\",\n            \"expected_goals_against\": \"<double>\",\n            \"expected_goal_diff\": \"<double>\",\n            \"expected_points\": \"<double>\"\n          }\n        ],\n        \"notes\": \"<string>\"\n      }\n    },\n    {\n      \"id\": \"<long>\",\n      \"league_id\": \"<long>\",\n      \"strategy\": \"<string>\",\n      \"snapshot_id\": \"<long>\",\n      \"league_version\": \"<long>\",\n      \"created_at\": \"<dateTime>\",\n      \"stale\": \"<boolean>\",\n      \"result\": {\n        \"strategy\": \"<string>\",\n        \"projected_table\": [\n          {\n            \"projected_position\": \"<integer>\",\n            \"team_id\": \"<long>\",\n            \"team_name\": \"<string>\",\n            \"championship_pct\": \"<double>\",\n            \"average_position\": \"<double>\",\n            \"played\": \"<integer>\",\n            \"expected_won\": \"<double>\",\n            \"expected_drawn\": \"<double>\",\n            \"expected_lost\": \"<double>\",\n            \"expected_goals_for\": \"<double>\",\n            \"expected_goals_against\": \"<double>\",\n            \"expected_goal_diff\": \"<double>\",\n            \"expected_points\": \"<double>\"\n          },\n          {\n            \"projected_position\": \"<integer>\",\n            \"team_id\": \"<long>\",\n            \"team_name\": \"<string>\",\n            \"championship_pct\": \"<double>\",\n            \"average_position\": \"<double>\",\n            \"played\": \"<integer>\",\n            \"expected_won\": \"<double>\",\n            \"expected_drawn\": \"<double>\",\n            \"expected_lost\": \"<double>\",\n            \"expected_goals_for\": \"<double>\",\n            \"expected_goals_against\": \"<double>\",\n            \"expected_goal_diff\": \"<double>\",\n            \"expected_points\": \"<double>\"\n          }\n        ],\n        \"entries\": [\n          {\n            \"projected_position\": \"<integer>\",\n            \"team_id\": \"<long>\",\n            \"team_name\": \"<string>\",\n            \"championship_pct\": \"<double>\",\n            \"average_position\": \"<double>\",\n            \"played\": \"<integer>\",\n            \"expected_won\": \"<double>\",\n            \"expected_drawn\": \"<double>\",\n            \"expected_lost\": \"<double>\",\n            \"expected_goals_for\": \"<double>\",\n            \"expected_goals_against\": \"<double>\",\n            \"expected_goal_diff\": \"<double>\",\n            \"expected_points\": \"<double>\"\n          },\n          {\n            \"projected_position\": \"<integer>\",\n            \"team_id\": \"<long>\",\n            \"team_name\": \"<string>\",\n            \"championship_pct\": \"<double>\",\n            \"average_position\": \"<double>\",\n            \"played\": \"<integer>\",\n            \"expected_won\": \"<double>\",\n            \"expected_drawn\": \"<double>\",\n            \"expected_lost\": \"<double>\",\n            \"expected_goals_for\": \"<double>\",\n            \"expected_goals_against\": \"<double>\",\n            \"expected_goal_diff\": \"<double>\",\n            \"expected_points\": \"<double>\"\n          }\n        ],\n        \"notes\": \"<string>\"\n      }\n    }\n  ],\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200', () => pm.response.to.have.status(200));",
+              "const runs = pm.response.json().data;",
+              "pm.test('prior run is now stale after the edit', () => {",
+              "  const r = runs.find(x => x.id === Number(pm.collectionVariables.get('runID')));",
+              "  pm.expect(r).to.not.be.undefined;",
+              "  pm.expect(r.stale).to.eql(true);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "520f89d4-70eb-4d29-99fa-8a5dd6ac7549",
+      "name": "12. Get one prediction run",
+      "request": {
+        "name": "Get one prediction run",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "predictions",
+            ":runID"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            },
+            {
+              "type": "any",
+              "value": "{{runID}}",
+              "key": "runID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "8272d859-0486-4c0b-9381-dd5e44469420",
+          "name": "Single prediction run",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "predictions",
+                ":runID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "runID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": \"<long>\",\n    \"league_id\": \"<long>\",\n    \"strategy\": \"<string>\",\n    \"snapshot_id\": \"<long>\",\n    \"league_version\": \"<long>\",\n    \"created_at\": \"<dateTime>\",\n    \"stale\": \"<boolean>\",\n    \"result\": {\n      \"strategy\": \"<string>\",\n      \"projected_table\": [\n        {\n          \"projected_position\": \"<integer>\",\n          \"team_id\": \"<long>\",\n          \"team_name\": \"<string>\",\n          \"championship_pct\": \"<double>\",\n          \"average_position\": \"<double>\",\n          \"played\": \"<integer>\",\n          \"expected_won\": \"<double>\",\n          \"expected_drawn\": \"<double>\",\n          \"expected_lost\": \"<double>\",\n          \"expected_goals_for\": \"<double>\",\n          \"expected_goals_against\": \"<double>\",\n          \"expected_goal_diff\": \"<double>\",\n          \"expected_points\": \"<double>\"\n        },\n        {\n          \"projected_position\": \"<integer>\",\n          \"team_id\": \"<long>\",\n          \"team_name\": \"<string>\",\n          \"championship_pct\": \"<double>\",\n          \"average_position\": \"<double>\",\n          \"played\": \"<integer>\",\n          \"expected_won\": \"<double>\",\n          \"expected_drawn\": \"<double>\",\n          \"expected_lost\": \"<double>\",\n          \"expected_goals_for\": \"<double>\",\n          \"expected_goals_against\": \"<double>\",\n          \"expected_goal_diff\": \"<double>\",\n          \"expected_points\": \"<double>\"\n        }\n      ],\n      \"entries\": [\n        {\n          \"projected_position\": \"<integer>\",\n          \"team_id\": \"<long>\",\n          \"team_name\": \"<string>\",\n          \"championship_pct\": \"<double>\",\n          \"average_position\": \"<double>\",\n          \"played\": \"<integer>\",\n          \"expected_won\": \"<double>\",\n          \"expected_drawn\": \"<double>\",\n          \"expected_lost\": \"<double>\",\n          \"expected_goals_for\": \"<double>\",\n          \"expected_goals_against\": \"<double>\",\n          \"expected_goal_diff\": \"<double>\",\n          \"expected_points\": \"<double>\"\n        },\n        {\n          \"projected_position\": \"<integer>\",\n          \"team_id\": \"<long>\",\n          \"team_name\": \"<string>\",\n          \"championship_pct\": \"<double>\",\n          \"average_position\": \"<double>\",\n          \"played\": \"<integer>\",\n          \"expected_won\": \"<double>\",\n          \"expected_drawn\": \"<double>\",\n          \"expected_lost\": \"<double>\",\n          \"expected_goals_for\": \"<double>\",\n          \"expected_goals_against\": \"<double>\",\n          \"expected_goal_diff\": \"<double>\",\n          \"expected_points\": \"<double>\"\n        }\n      ],\n      \"notes\": \"<string>\"\n    }\n  },\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "805f3152-fb3e-4366-8ad9-8da3c9e60454",
+      "name": "13. Play all remaining weeks",
+      "request": {
+        "name": "Play all remaining weeks",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "play-all"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "disabled": false,
+            "description": {
+              "content": "(Required) Unique key per logical operation. A fresh GUID is generated each run; reuse a key to safely replay the same request.",
+              "type": "text/plain"
+            },
+            "key": "Idempotency-Key",
+            "value": "{{$guid}}"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "3b9b2bcc-e017-4a30-886e-e65e588792f8",
+          "name": "Multi-week play result",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "play-all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) Required for week-advancing writes. Reuse the same key to replay the same request safely.",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"weeks\": [\n      {\n        \"week\": \"<integer>\",\n        \"matches\": [\n          {\n            \"id\": \"<long>\",\n            \"league_id\": \"<long>\",\n            \"week\": \"<integer>\",\n            \"home_team_id\": \"<long>\",\n            \"away_team_id\": \"<long>\",\n            \"home_goals\": \"<integer>\",\n            \"away_goals\": \"<integer>\",\n            \"played_at\": \"<dateTime>\",\n            \"edited_at\": \"<dateTime>\",\n            \"played\": \"<boolean>\"\n          },\n          {\n            \"id\": \"<long>\",\n            \"league_id\": \"<long>\",\n            \"week\": \"<integer>\",\n            \"home_team_id\": \"<long>\",\n            \"away_team_id\": \"<long>\",\n            \"home_goals\": \"<integer>\",\n            \"away_goals\": \"<integer>\",\n            \"played_at\": \"<dateTime>\",\n            \"edited_at\": \"<dateTime>\",\n            \"played\": \"<boolean>\"\n          }\n        ]\n      },\n      {\n        \"week\": \"<integer>\",\n        \"matches\": [\n          {\n            \"id\": \"<long>\",\n            \"league_id\": \"<long>\",\n            \"week\": \"<integer>\",\n            \"home_team_id\": \"<long>\",\n            \"away_team_id\": \"<long>\",\n            \"home_goals\": \"<integer>\",\n            \"away_goals\": \"<integer>\",\n            \"played_at\": \"<dateTime>\",\n            \"edited_at\": \"<dateTime>\",\n            \"played\": \"<boolean>\"\n          },\n          {\n            \"id\": \"<long>\",\n            \"league_id\": \"<long>\",\n            \"week\": \"<integer>\",\n            \"home_team_id\": \"<long>\",\n            \"away_team_id\": \"<long>\",\n            \"home_goals\": \"<integer>\",\n            \"away_goals\": \"<integer>\",\n            \"played_at\": \"<dateTime>\",\n            \"edited_at\": \"<dateTime>\",\n            \"played\": \"<boolean>\"\n          }\n        ]\n      }\n    ],\n    \"standings\": [\n      {\n        \"position\": \"<integer>\",\n        \"team_id\": \"<long>\",\n        \"team_name\": \"<string>\",\n        \"played\": \"<integer>\",\n        \"won\": \"<integer>\",\n        \"drawn\": \"<integer>\",\n        \"lost\": \"<integer>\",\n        \"goals_for\": \"<integer>\",\n        \"goals_against\": \"<integer>\",\n        \"goal_diff\": \"<integer>\",\n        \"points\": \"<integer>\"\n      },\n      {\n        \"position\": \"<integer>\",\n        \"team_id\": \"<long>\",\n        \"team_name\": \"<string>\",\n        \"played\": \"<integer>\",\n        \"won\": \"<integer>\",\n        \"drawn\": \"<integer>\",\n        \"lost\": \"<integer>\",\n        \"goals_for\": \"<integer>\",\n        \"goals_against\": \"<integer>\",\n        \"goal_diff\": \"<integer>\",\n        \"points\": \"<integer>\"\n      }\n    ],\n    \"league\": {\n      \"id\": \"<long>\",\n      \"name\": \"<string>\",\n      \"current_week\": \"<integer>\",\n      \"total_weeks\": \"<integer>\",\n      \"version\": \"<long>\",\n      \"created_at\": \"<dateTime>\",\n      \"complete\": \"<boolean>\"\n    }\n  },\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "cca34569-96b5-4352-87d7-8aa7003d2e43",
+          "name": "Error envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "play-all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) Required for week-advancing writes. Reuse the same key to replay the same request safely.",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "Bad Request",
+          "code": 400,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": \"\",\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"fields\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      }\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "87ef1d73-d96b-4f2d-b61c-f50c3634b64b",
+          "name": "Error envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "play-all"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": {
+                  "content": "(Required) Required for week-advancing writes. Reuse the same key to replay the same request safely.",
+                  "type": "text/plain"
+                },
+                "key": "Idempotency-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "Conflict",
+          "code": 409,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": \"\",\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"fields\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      }\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('play-all ok (200)', () => pm.response.to.have.status(200));",
+              "const d = pm.response.json().data;",
+              "pm.test('season complete', () => pm.expect(d.league.complete).to.eql(true));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "faaa4b2b-3bc9-49d4-90db-7544ba0ababa",
+      "name": "14. List leagues",
+      "request": {
+        "name": "List leagues",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "e3ff7efd-e779-4e75-994d-42091900b9c6",
+          "name": "Array of leagues",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": \"<long>\",\n      \"name\": \"<string>\",\n      \"current_week\": \"<integer>\",\n      \"total_weeks\": \"<integer>\",\n      \"version\": \"<long>\",\n      \"created_at\": \"<dateTime>\",\n      \"complete\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<long>\",\n      \"name\": \"<string>\",\n      \"current_week\": \"<integer>\",\n      \"total_weeks\": \"<integer>\",\n      \"version\": \"<long>\",\n      \"created_at\": \"<dateTime>\",\n      \"complete\": \"<boolean>\"\n    }\n  ],\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "0e3bad38-353a-4dd8-a29b-4e77175affdf",
+      "name": "15. Get league",
+      "request": {
+        "name": "Get league",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "e0df87a5-7fb4-4e39-abe2-1cb3dca12d96",
+          "name": "League envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": \"<long>\",\n    \"name\": \"<string>\",\n    \"current_week\": \"<integer>\",\n    \"total_weeks\": \"<integer>\",\n    \"version\": \"<long>\",\n    \"created_at\": \"<dateTime>\",\n    \"complete\": \"<boolean>\"\n  },\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "eeacd0dd-6e4c-4946-8bc3-7a62d4b7685a",
+          "name": "Error envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": \"\",\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"fields\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      }\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "7700be4c-3504-49fe-98b1-8b33a20a71e4",
+      "name": "16. List teams",
+      "request": {
+        "name": "List teams",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "teams"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "426fc8d0-15c5-4acb-a991-ace46053cac3",
+          "name": "Array of teams",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "teams"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": \"<long>\",\n      \"name\": \"<string>\",\n      \"strength\": \"<integer>\"\n    },\n    {\n      \"id\": \"<long>\",\n      \"name\": \"<string>\",\n      \"strength\": \"<integer>\"\n    }\n  ],\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "8c9ce9ff-8566-46cc-9a69-89b7662654d1",
+      "name": "17. List matches",
+      "request": {
+        "name": "List matches, optionally filtered by week",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "matches"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "2ef38b9e-1f66-4b16-a490-d36716734309",
+          "name": "Matches",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "matches"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "",
+                    "type": "text/plain"
+                  },
+                  "key": "week",
+                  "value": "<integer>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": [\n    {\n      \"id\": \"<long>\",\n      \"league_id\": \"<long>\",\n      \"week\": \"<integer>\",\n      \"home_team_id\": \"<long>\",\n      \"away_team_id\": \"<long>\",\n      \"home_goals\": \"<integer>\",\n      \"away_goals\": \"<integer>\",\n      \"played_at\": \"<dateTime>\",\n      \"edited_at\": \"<dateTime>\",\n      \"played\": \"<boolean>\"\n    },\n    {\n      \"id\": \"<long>\",\n      \"league_id\": \"<long>\",\n      \"week\": \"<integer>\",\n      \"home_team_id\": \"<long>\",\n      \"away_team_id\": \"<long>\",\n      \"home_goals\": \"<integer>\",\n      \"away_goals\": \"<integer>\",\n      \"played_at\": \"<dateTime>\",\n      \"edited_at\": \"<dateTime>\",\n      \"played\": \"<boolean>\"\n    }\n  ],\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "52945469-2788-42d5-894f-f6672592a3b7",
+      "name": "18. Get match",
+      "request": {
+        "name": "Get match",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "matches",
+            ":matchID"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            },
+            {
+              "type": "any",
+              "value": "{{matchID}}",
+              "key": "matchID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "484b6f82-08de-4ac4-9446-66f4ba4ce406",
+          "name": "Single match",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "matches",
+                ":matchID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "matchID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": \"<long>\",\n    \"league_id\": \"<long>\",\n    \"week\": \"<integer>\",\n    \"home_team_id\": \"<long>\",\n    \"away_team_id\": \"<long>\",\n    \"home_goals\": \"<integer>\",\n    \"away_goals\": \"<integer>\",\n    \"played_at\": \"<dateTime>\",\n    \"edited_at\": \"<dateTime>\",\n    \"played\": \"<boolean>\"\n  },\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        },
+        {
+          "id": "fe85bd8d-6295-40bd-b3d4-e095b4ea6dd7",
+          "name": "Error envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "matches",
+                ":matchID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                },
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "matchID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "body": {}
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": \"\",\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"fields\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      }\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "bce72d6f-8a96-4f99-970f-0762e35ba0e7",
+      "name": "19. Reset league",
+      "request": {
+        "name": "Reset league (clears all results, preserves teams + fixtures)",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID",
+            "reset"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "1f4c307d-b23a-40b1-88ab-8167ab7f44ec",
+          "name": "League envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID",
+                "reset"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": {\n    \"id\": \"<long>\",\n    \"name\": \"<string>\",\n    \"current_week\": \"<integer>\",\n    \"total_weeks\": \"<integer>\",\n    \"version\": \"<long>\",\n    \"created_at\": \"<dateTime>\",\n    \"complete\": \"<boolean>\"\n  },\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": \"\"\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('reset ok (200)', () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "d8b87923-fb65-47e2-a10e-aeb1ba501338",
+      "name": "20. Delete league",
+      "request": {
+        "name": "Delete league",
+        "description": {},
+        "url": {
+          "path": [
+            "api",
+            "v1",
+            "leagues",
+            ":leagueID"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "type": "any",
+              "value": "{{leagueID}}",
+              "key": "leagueID",
+              "disabled": false,
+              "description": {
+                "content": "(Required) ",
+                "type": "text/plain"
+              }
+            }
+          ]
+        },
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "method": "DELETE",
+        "body": {},
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "e2e88d3c-4821-4bda-b601-c7007badabcf",
+          "name": "Deleted",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "body": {}
+          },
+          "status": "No Content",
+          "code": 204,
+          "header": [],
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        },
+        {
+          "id": "5ae65a5b-ed2e-4f5e-9bac-1ab6a9e227bb",
+          "name": "Error envelope",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "leagues",
+                ":leagueID"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "description": {
+                    "content": "(Required) ",
+                    "type": "text/plain"
+                  },
+                  "type": "any",
+                  "value": "<long>",
+                  "key": "leagueID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {}
+          },
+          "status": "Not Found",
+          "code": 404,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": "{\n  \"data\": \"\",\n  \"meta\": {\n    \"request_id\": \"<string>\",\n    \"league_version\": \"<long>\"\n  },\n  \"error\": {\n    \"code\": \"<string>\",\n    \"message\": \"<string>\",\n    \"fields\": [\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      },\n      {\n        \"field\": \"<string>\",\n        \"message\": \"<string>\"\n      }\n    ]\n  }\n}",
+          "cookie": [],
+          "_postman_previewlanguage": "json"
+        }
+      ],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('deleted (204)', () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "leagueID",
+      "value": "1"
+    },
+    {
+      "key": "matchID",
+      "value": "1"
+    },
+    {
+      "key": "runID",
+      "value": "1"
+    }
+  ],
+  "info": {
+    "_postman_id": "2b7934a6-19b9-4f44-b433-5ba993a90f71",
+    "name": "League API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Backend for an intern case study. Simulates a configured-size\nfootball league (double round-robin, Premier-League scoring), tracks\nstandings, edits results, and produces championship predictions.\n",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+CREATE TABLE leagues (
+    id            BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name          VARCHAR(120)    NOT NULL,
+    current_week  INT UNSIGNED    NOT NULL DEFAULT 1,
+    total_weeks   INT UNSIGNED    NOT NULL DEFAULT 6,
+    version       BIGINT UNSIGNED NOT NULL DEFAULT 0,
+    created_at    TIMESTAMP(3)    NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

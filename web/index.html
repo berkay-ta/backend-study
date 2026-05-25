@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>League API</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+<div id="status" role="status" hidden></div>
+
+<header class="topbar">
+  <div class="brand">League API</div>
+  <div class="topbar-tools">
+    <select id="league-select" hidden></select>
+    <button id="btn-new" class="btn">+ new league</button>
+    <a href="#" id="btn-settings" class="link">settings</a>
+  </div>
+</header>
+
+<main>
+
+  <section id="settings-tray" class="tray" hidden>
+    <h3>Settings</h3>
+    <div class="form-grid">
+      <label>API base URL<input id="s-base" type="text" placeholder="(same origin)" /></label>
+      <label>X-API-Key<input id="s-key" type="text" placeholder="(none)" /></label>
+    </div>
+    <div class="actions right">
+      <button id="btn-save-settings" class="btn btn-primary">save</button>
+    </div>
+  </section>
+
+  <section id="new-tray" class="tray" hidden>
+    <h3>New league</h3>
+    <form id="new-form">
+      <label class="full">League name<input name="name" required placeholder="My league" /></label>
+      <table class="form-table">
+        <thead><tr><th>Team</th><th class="num">Strength (1–100)</th></tr></thead>
+        <tbody>
+          <tr><td><input class="t-name" required value="Arsenal" /></td><td><input class="t-str" type="number" min="1" max="100" value="80" /></td></tr>
+          <tr><td><input class="t-name" required value="Chelsea" /></td><td><input class="t-str" type="number" min="1" max="100" value="75" /></td></tr>
+          <tr><td><input class="t-name" required value="Liverpool" /></td><td><input class="t-str" type="number" min="1" max="100" value="85" /></td></tr>
+          <tr><td><input class="t-name" required value="Man City" /></td><td><input class="t-str" type="number" min="1" max="100" value="78" /></td></tr>
+        </tbody>
+      </table>
+      <div class="actions right">
+        <button type="button" id="btn-cancel-new" class="btn">cancel</button>
+        <button type="submit" class="btn btn-primary">create league</button>
+      </div>
+    </form>
+  </section>
+
+  <section id="empty" class="empty" hidden>
+    <h2>No leagues yet</h2>
+    <p>Click <strong>+ new league</strong> to create one.</p>
+  </section>
+
+  <section id="league" hidden>
+
+    <div class="meta-bar">
+      <div class="meta-pair"><b id="m-played">—</b><span>weeks played</span></div>
+      <div class="meta-pair"><b id="m-status">—</b><span>status</span></div>
+      <div class="meta-pair"><b id="m-version">—</b><span>version</span></div>
+      <span class="meta-spacer"></span>
+      <button id="btn-reset" class="btn btn-ghost">reset</button>
+      <button id="btn-delete" class="btn btn-ghost btn-danger">delete league</button>
+    </div>
+
+    <div class="three-up">
+
+      <section class="panel panel-stand">
+        <header class="panel-head"><h2>League table</h2></header>
+        <table class="standings">
+          <thead><tr>
+            <th></th><th>Team</th>
+            <th class="num">P</th><th class="num">W</th><th class="num">D</th><th class="num">L</th>
+            <th class="num">GD</th><th class="num">Pts</th>
+          </tr></thead>
+          <tbody id="standings"></tbody>
+        </table>
+      </section>
+
+      <section class="panel panel-match">
+        <header class="panel-head">
+          <h2>Match results</h2>
+          <div class="week-nav">
+            <button id="btn-prev-week" class="btn btn-mini" title="previous week">‹</button>
+            <span id="week-label">—</span>
+            <button id="btn-next-view-week" class="btn btn-mini" title="next week">›</button>
+          </div>
+        </header>
+        <div id="matches"></div>
+        <footer class="panel-foot">
+          <button id="btn-next" class="btn btn-primary">play next week</button>
+          <button id="btn-all" class="btn">play all</button>
+        </footer>
+      </section>
+
+      <section class="panel panel-pred">
+        <header class="panel-head">
+          <h2>Championship</h2>
+          <select id="pred-strategy" title="prediction strategy">
+            <option value="monte_carlo">Monte Carlo</option>
+            <option value="ai_analyst">AI analyst</option>
+          </select>
+        </header>
+        <div id="pred-out" class="muted pred-empty">Available after 4 weeks played.</div>
+        <footer class="panel-foot">
+          <button id="btn-pred" class="btn btn-primary">run prediction</button>
+          <button id="btn-toggle-detail" class="btn btn-mini" hidden>show detail</button>
+        </footer>
+      </section>
+
+    </div>
+
+    <details class="advanced">
+      <summary>What if</summary>
+      <div class="adv-body">
+        <p class="hint">Edit scores. Not saved.</p>
+        <div id="whatif-list"></div>
+        <div class="actions">
+          <label class="inline">strategy
+            <select id="wi-strategy">
+              <option value="">— standings only —</option>
+              <option value="monte_carlo">Monte Carlo</option>
+              <option value="ai_analyst">AI analyst</option>
+            </select>
+          </label>
+          <button id="btn-whatif" class="btn btn-primary">run</button>
+          <button id="btn-whatif-clear" class="btn">clear</button>
+        </div>
+        <div id="whatif-out" class="muted">No what-if yet.</div>
+      </div>
+    </details>
+
+    <details class="advanced">
+      <summary>Recent runs</summary>
+      <div class="adv-body">
+        <div id="history" class="muted">None yet.</div>
+      </div>
+    </details>
+
+  </section>
+
+</main>
+
+<dialog id="edit-modal">
+  <form id="edit-form" method="dialog">
+    <h3>Edit match</h3>
+    <p id="edit-teams" class="hint"></p>
+    <div class="score-edit">
+      <input id="edit-home" type="number" min="0" required />
+      <span class="dash">–</span>
+      <input id="edit-away" type="number" min="0" required />
+    </div>
+    <div class="actions right">
+      <button type="button" id="btn-edit-cancel" class="btn">cancel</button>
+      <button type="submit" class="btn btn-primary">save</button>
+    </div>
+  </form>
+</dialog>
+
+<script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+# Binaries
+/bin/
+/dist/
+*.test
+*.out
+
+# Local env (committed example is .env.example)
+.env
+.env.local
+
+# Editor / OS noise
+.DS_Store
+.idea/
+.vscode/
+
+# Go build cache
+/vendor/
+
+# Coverage
+coverage.out
+coverage.html
+
+# Local case-study/review artifacts
+*.pdf
+
+# Local agent config
+.claude/

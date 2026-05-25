@@ -1,0 +1,9 @@
+# Local dev. Auto-loaded by `docker compose` (no -f). Publishes ports to host.
+services:
+  mysql:
+    ports:
+      - "3306:3306"
+
+  api:
+    ports:
+      - "8080:8080"
